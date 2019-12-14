@@ -20,10 +20,9 @@
     "pg": "^7.14.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1",
     "sqlite3": "^4.1.1",
     "stripe": "^7.14.0"
   },
-  "devDependencies": {
-    "sequelize-cli": "^5.5.1"
-  }
+  "devDependencies": {}
 }

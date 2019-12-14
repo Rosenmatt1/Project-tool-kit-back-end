@@ -41,26 +41,26 @@ const Product = db.Product
 
 // Router files
 
-app.post('/api/checkout', async (req, res, next) => {
-  const lineItem = req.body
-  const lineItems = [lineItem]
+// app.post('/api/checkout', async (req, res, next) => {
+//   const lineItem = req.body
+//   const lineItems = [lineItem]
 
-  try {
-    //Create the session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: lineItems,
-      success_url: 'http://localhost:3000/success',
-      cancel_url: 'http://localhost:3000/cancel',
-    })
-    //send session to client
-    res.json({ session })
-  }
-  catch (error) {
-    next(error)
-    // res.status(400).json({ error })
-  }
-})
+//   try {
+//     //Create the session
+//     const session = await stripe.checkout.sessions.create({
+//       payment_method_types: ['card'],
+//       line_items: lineItems,
+//       success_url: 'http://localhost:3000/success',
+//       cancel_url: 'http://localhost:3000/cancel',
+//     })
+//     //send session to client
+//     res.json({ session })
+//   }
+//   catch (error) {
+//     next(error)
+//     // res.status(400).json({ error })
+//   }
+// })
 
 // Routes
 app.get('/api/test', (req, res) => {
@@ -131,6 +131,7 @@ function notFound(req, res, next) {
 }
 
 // eslint-disable-next-line
+// 4 arguments indicate set up to handle errors
 function errorHandler(err, req, res, next) {
   console.error('ERROR', err)
   const stack = process.env.NODE_ENV !== 'production' ? err.stack : undefined
