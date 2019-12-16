@@ -85,6 +85,16 @@ app.get('/api/categories', (req, res, next) => {
     })
 })
 
+app.post('/api/categories', (req, res) => {
+  const name = req.body.name;
+  db.Category.create({
+    name: name,
+  })
+    .then(newCategory => {
+      res.json(newCategory);
+    })
+});
+
 app.get('/api/products', (req, res, next) => {
   Product.findAll({
     include: [{ model: Category }]
