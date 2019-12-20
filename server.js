@@ -101,9 +101,10 @@ app.post('/api/categories', (req, res) => {
 app.post('/api/user', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+  const hash = bcrypt.hashSync(password, saltRounds)
   db.User.create({
     username: username,
-    password: password
+    password: hash
   })
     .then(newUser => {
       res.json(newUser);
