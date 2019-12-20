@@ -3,6 +3,8 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const jwt = require('express-jwt')
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 // const jwksRsa = require('jwks-rsa')
 // const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
@@ -92,6 +94,18 @@ app.post('/api/categories', (req, res) => {
   })
     .then(newCategory => {
       res.json(newCategory);
+    })
+});
+
+app.post('/api/user', (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  db.Category.create({
+    username: username,
+    password: password
+  })
+    .then(newUser => {
+      res.json(newUser);
     })
 });
 
