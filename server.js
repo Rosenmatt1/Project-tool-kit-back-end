@@ -40,6 +40,7 @@ app.use(express.json())  //give body parsing
 const db = require('./models')
 const Category = db.Category
 const Product = db.Product
+const User = db.User
 
 // Router files
 
@@ -100,7 +101,7 @@ app.post('/api/categories', (req, res) => {
 app.post('/api/user', (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  db.Category.create({
+  db.User.create({
     username: username,
     password: password
   })
