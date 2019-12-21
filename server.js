@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
-const jwt = require('express-jwt')
+const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 // const jwksRsa = require('jwks-rsa')
@@ -106,10 +106,37 @@ app.post('/api/user', (req, res) => {
     username: username,
     password: hash
   })
+    // .then(newUser => {
+    //   // console.log("newUser", newUser)
+    //   var token = jwt.sign({ user: newUser }, 'shhhhh');
+    //   res.json("jwt", token);
+    // })
     .then(newUser => {
       res.json(newUser);
     })
 });
+
+
+// router.post("/login", (req, res, next) => {
+//   knex("users").where("users.email", req.body.username).then(function (user) {
+//     const thisUser = user[0];
+//     if (thisUser) {
+//       bcrypt.compare(req.body.password, thisUser.hashed_password, function (err, result) {
+//         if (result == true) {
+//           var token = jwt.sign({ user: thisUser }, 'shhhhh');
+//           res.send({ "jwt": token });
+//         } else {
+//           res.send(400);
+//         }
+//       });
+//     } else {
+//       res.send(400);
+//     }
+//   }).catch(function (error) {
+//     res.send(400);
+//   })
+// });
+
 
 app.get('/api/products', (req, res, next) => {
   Product.findAll({
