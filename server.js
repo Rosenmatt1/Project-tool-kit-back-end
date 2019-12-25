@@ -124,7 +124,10 @@ app.post("/api/login", (req, res, next) => {
   .then(user => {
     let test = bcrypt.compareSync(req.body.password, user.password)
     console.log(test)
-    res.send(test);
+    if (test == true) {
+      var token = jwt.sign({ user: user }, 'shhhhh');
+      res.send({ "jwt": token })
+    }
   })
 // .then(thisUser => {
 // console.log("thisUser", thisUser)
