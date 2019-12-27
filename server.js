@@ -36,6 +36,9 @@ app.use(cors())
 app.use(morgan('dev'))
 app.use(express.json())  //give body parsing
 
+const hidden = require('./routes/hidden');
+app.use('/hidden', hidden);
+
 // Sequelize Models
 const db = require('./models')
 const Category = db.Category
@@ -112,10 +115,10 @@ app.post('/api/user', (req, res) => {
     //   res.json("jwt", token);
     // })
     .then(newUser => {
-      // var token = jwt.sign({ username: 'bar' }, 'shhhhh');
-      // // console.log("token", token)
-      // res.json("jwt", token);
-      res.json(newUser);
+      console.log("newUser", newUser)
+      var token = jwt.sign({ user: newUser  }, 'shhhhh');
+      console.log("token", token)
+      res.json({"jwt": token, user: newUser});
     })
 });
 
@@ -123,70 +126,16 @@ app.post("/api/login", (req, res, next) => {
   User.findOne({ where: { username: req.body.username } })
   .then(user => {
     let test = bcrypt.compareSync(req.body.password, user.password)
-    console.log(test)
     if (test == true) {
       var token = jwt.sign({ user: user }, 'shhhhh');
-      res.send({ "jwt": token })
-    }
+      res.send({ "jwt": token, user: user })
+    } else {
+        res.send(400);
+      }
+  }).catch(function (error) {
+    res.send(400);
   })
-// .then(thisUser => {
-// console.log("thisUser", thisUser)
-//   if (thisUser) {
-//     bcrypt.compareSync(req.body.password, thisUser.password, function (err, result) {
-//       console.log("result", result)
-//       if (result == true) {
-//         // var token = jwt.sign({ user: thisUser }, 'shhhhh');
-//         // res.send({ "jwt": token });
-//         let worked = "password matched!"
-//         res.send(worked)
-//       } else {
-//         res.send(400);
-//       }
-//     });
-//   } else {
-//     res.send(400);
-//   }
-// })
-  // knex("users").where("users.email", req.body.username).then(function (user) {
-  //   const thisUser = user[0];
-  //   if (thisUser) {
-  //     bcrypt.compare(req.body.password, thisUser.hashed_password, function (err, result) {
-  //       if (result == true) {
-  //         var token = jwt.sign({ user: thisUser }, 'shhhhh');
-  //         res.send({ "jwt": token });
-  //       } else {
-  //         res.send(400);
-  //       }
-  //     });
-  //   } else {
-  //     res.send(400);
-  //   }
-  // }).catch(function (error) {
-  //   res.send(400);
-  // })
 })
-
-
-
-// router.post("/login", (req, res, next) => {
-//   knex("users").where("users.email", req.body.username).then(function (user) {
-//     const thisUser = user[0];
-//     if (thisUser) {
-//       bcrypt.compare(req.body.password, thisUser.hashed_password, function (err, result) {
-//         if (result == true) {
-//           var token = jwt.sign({ user: thisUser }, 'shhhhh');
-//           res.send({ "jwt": token });
-//         } else {
-//           res.send(400);
-//         }
-//       });
-//     } else {
-//       res.send(400);
-//     }
-//   }).catch(function (error) {
-//     res.send(400);
-//   })
-// });
 
 
 app.get('/api/products', (req, res, next) => {
