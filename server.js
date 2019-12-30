@@ -1,4 +1,4 @@
-require('dotenv').config()
+const dotenv = require('dotenv')
 const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
@@ -7,6 +7,10 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 // const jwksRsa = require('jwks-rsa')
 // const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+
+// const environment = process.env.NODE_ENV || 'development';
+// const sequelizeConfig = require('./config/config.json')[environment];
+// const sequelize = require('sequelize')(sequelizeConfig);
 
 const PORT = process.env.PORT || 4000
 const app = express()

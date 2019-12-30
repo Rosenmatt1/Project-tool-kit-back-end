@@ -20,6 +20,8 @@
     "password": null,
     "database": "database_production",
     "host": "127.0.0.1",
+    "use_env_variable": "DATABASE_URL",
+    "connection": "postgres://omehpaprebfiat:250fc06b5ce9e2cc35c88be0a7fbdd654af2e604bae24a2d31b3d1e3fc71ed3a@ec2-174-129-255-7.compute-1.amazonaws.com:5432/d39tj4hjfknka4",
     "dialect": "postgres",
     "operatorsAliases": false
   }
