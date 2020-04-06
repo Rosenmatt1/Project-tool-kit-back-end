@@ -141,7 +141,6 @@ app.post("/api/login", (req, res, next) => {
   })
 })
 
-
 app.get('/api/products', (req, res, next) => {
   Product.findAll({
     include: [{ model: Category }]
