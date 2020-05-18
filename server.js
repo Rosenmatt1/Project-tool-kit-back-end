@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 // const jwksRsa = require('jwks-rsa')
-// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 // const environment = process.env.NODE_ENV || 'development';
 // const sequelizeConfig = require('./config/config.json')[environment];
@@ -51,26 +51,26 @@ const User = db.User
 
 // Router files
 
-// app.post('/api/checkout', async (req, res, next) => {
-//   const lineItem = req.body
-//   const lineItems = [lineItem]
+app.post('/api/checkout', async (req, res, next) => {
+  const lineItem = req.body
+  const lineItems = [lineItem]
 
-//   try {
-//     //Create the session
-//     const session = await stripe.checkout.sessions.create({
-//       payment_method_types: ['card'],
-//       line_items: lineItems,
-//       success_url: 'http://localhost:3000/success',
-//       cancel_url: 'http://localhost:3000/cancel',
-//     })
-//     //send session to client
-//     res.json({ session })
-//   }
-//   catch (error) {
-//     next(error)
-//     // res.status(400).json({ error })
-//   }
-// })
+  try {
+    //Create the session
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: lineItems,
+      success_url: 'http://localhost:3000/success',
+      cancel_url: 'http://localhost:3000/cancel',
+    })
+    //send session to client
+    res.json({ session })
+  }
+  catch (error) {
+    next(error)
+    // res.status(400).json({ error })
+  }
+})
 
 // Routes
 app.get('/api/test', (req, res) => {
